@@ -25,11 +25,9 @@ while true; do
   if [ $for_count -ge $RESTART_INTERVALS_TIME ]; then
     echo "定时重启并回退 stationd 服务..."
     systemctl stop stationd
-    cd $HOME/tracks
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    cd $HOME
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
     systemctl restart stationd
     for_count=0
   fi
@@ -39,11 +37,9 @@ while true; do
   if echo "$TAIL_LINES_3" | grep -q "$ERROR_STRING_1"; then
     echo "检测到错误信息 '$ERROR_STRING_1'，重启 stationd 服务..."
     systemctl stop stationd
-    cd $HOME/tracks
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    cd $HOME
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
     systemctl restart stationd
     for_count=0
   fi
@@ -53,11 +49,9 @@ while true; do
   if echo "$TAIL_LINES_100" | grep -q "$ERROR_STRING_2"; then
     echo "检测到错误信息 '$ERROR_STRING_2'，重启 stationd 服务..."
     systemctl stop stationd
-    cd $HOME/tracks
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    go run cmd/main.go rollback
-    cd $HOME
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
     systemctl restart stationd
     for_count=0
   fi
