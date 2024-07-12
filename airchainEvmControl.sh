@@ -215,7 +215,7 @@ cat > clear_log.sh << 'EOF'
 #!/bin/bash
 LOG_FILES=("airchainSendAccount.py.out" "airchainMonitor.sh.out")
 # 日志文件最大1MB
-LOG_FILE_MAX=1024
+LOG_FILE_MAX=1048576
 while true; do
     for LOG_FILE in "${LOG_FILES[@]}"; do
         if [ -e $LOG_FILE ]; then
