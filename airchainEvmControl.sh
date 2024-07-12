@@ -168,9 +168,9 @@ function install_node_2() {
     # LOCAL_IP=$(hostname -I | awk '{print $1}')
     LOCAL_IP=$(curl -s4 ifconfig.me/ip)
 
-    read -p "请输入RPC地址（默认：https://airchains-rpc.sbgid.com/）: " jsonRPC
+    read -p "请输入RPC地址（默认：https://airchains-rpc.kubenode.xyz/）: " jsonRPC
     if [ -z "$jsonRPC" ]; then
-        jsonRPC="https://airchains-rpc.sbgid.com/"
+        jsonRPC="https://airchains-rpc.kubenode.xyz/"
     fi
 
     create_station_cmd="$HOME/tracks/build/tracks create-station --accountName wallet --accountPath $HOME/.tracks/junction-accounts/keys --jsonRPC \"$jsonRPC/\" --info \"EVM Track\" --tracks \"$AIR_ADDRESS\" --bootstrapNode \"/ip4/$LOCAL_IP/tcp/2300/p2p/$NODE_ID\""
@@ -362,6 +362,19 @@ function check_points() {
     cat $fileName
 }
 
+# 更换RPC
+function change_rpc() {
+    CONFIG_PATH="$HOME/.tracks/config/sequencer.toml"
+    old_rpc_url=$(grep 'JunctionRPC' "$CONFIG_PATH" | sed -n 's/.*JunctionRPC = "\([^"]*\)".*/\1/p')
+    echo "旧的RPC地址: $old_rpc_url"
+    read -p "请输入新的RPC地址: " new_rpc_url
+    if [ ! -z "$new_rpc_url" ]; then
+        sed -i "s|JunctionRPC = \"$old_rpc_url\"|JunctionRPC = \"$new_rpc_url\"|" $CONFIG_PATH
+        echo "已替换，正在重启节点"
+        restart
+    fi
+}
+
 # 彻底删除节点
 function delete_node() {
     cd $HOME
@@ -417,6 +430,7 @@ function main_menu() {
         echo "========== 其他功能 =========="
         echo "8. 查看evm私钥、air地址及助记词"
         echo "9. 查看项目积分"
+        echo "10. 更换RPC"
         echo ""
         echo "========== 删除节点 =========="
         echo "100. 彻底删除节点"
@@ -433,6 +447,7 @@ function main_menu() {
             7) stationd_log ;;
             8) private_key ;;
             9) check_points ;;
+            10) change_rpc ;;
             100) delete_node ;;
             *) echo "无效选项。" ;;
         esac
