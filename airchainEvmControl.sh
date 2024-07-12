@@ -2,7 +2,7 @@
 
 # 安装所需的软件包
 function install_dependencies() {
-    dependencies=("build-essential" "git" "make" "jq" "curl" "clang" "pkg-config" "libssl-dev" "wget", "python3", "pip")
+    dependencies=("build-essential" "git" "make" "jq" "curl" "clang" "pkg-config" "libssl-dev" "wget" "python3" "pip")
     for dep in "${dependencies[@]}"; do
         if dpkg-query -W "$dep" >/dev/null 2>&1; then
             echo "$dep 已安装，跳过安装步骤。"
