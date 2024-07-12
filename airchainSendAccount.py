@@ -20,7 +20,7 @@ faucet_account_address = ""
 faucet_account_key = "_FaucetAccountKey_"
 
 # 进程池配置
-process_pool_max_worker = 5
+process_pool_max_worker = 2
 
 # 使用私钥获取钱包地址
 def getAccountAddress():
