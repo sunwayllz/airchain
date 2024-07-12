@@ -183,7 +183,7 @@ function install_node_2() {
 
     ################ Tracks加入守护进程并启动 #####################
 
-    cat /etc/systemd/system/stationd.service > /dev/null << EOF
+    cat > /etc/systemd/system/stationd.service > /dev/null << EOF
 [Unit]
 Description=station track service
 After=network-online.target
