@@ -18,7 +18,7 @@ function install_dependencies() {
         echo "go 已安装，跳过安装步骤。"
     else
         echo "下载并安装 Go..."
-        wget --no-cache -c https://golang.org/dl/go1.22.4.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
+        wget --no-cache -N -c https://golang.org/dl/go1.22.4.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
         echo 'export GOROOT=/usr/local/go' >> ~/.bashrc
         echo 'export GOPATH=$HOME/go' >> ~/.bashrc
         echo 'export GO111MODULE=on' >> ~/.bashrc
@@ -78,7 +78,7 @@ EOF
     ################ 使用eigenlayer作为DA #####################
 
     cd $HOME
-    wget --no-cache https://github.com/airchains-network/tracks/releases/download/v0.0.3/eigenlayer
+    wget --no-cache -N https://github.com/airchains-network/tracks/releases/download/v0.0.3/eigenlayer
     chmod +x eigenlayer
     mv eigenlayer /usr/local/bin/eigenlayer
 
@@ -239,7 +239,7 @@ function restartSendAccount_python() {
     echo > $py_out_file
     # 下载python脚本
     if [ ! -e $py_file ]; then
-        wget --no-cache -O $py_file https://raw.githubusercontent.com/sunwayllz/airchain/main/airchainSendAccount.py
+        wget --no-cache -N -O $py_file https://raw.githubusercontent.com/sunwayllz/airchain/main/airchainSendAccount.py
         pip install web3
         pip install eth_account
         # 获取evm私钥
@@ -265,7 +265,7 @@ function restartMonitor_shell() {
     echo > $shell_out_file
     # 下载脚本
     if [ ! -e $shell_file ]; then
-        wget --no-cache -O $shell_file https://raw.githubusercontent.com/sunwayllz/airchain/main/airchainMonitor.sh
+        wget --no-cache -N -O $shell_file https://raw.githubusercontent.com/sunwayllz/airchain/main/airchainMonitor.sh
         chmod +x $shell_file
     fi
     # 运行定时重启回滚脚本
