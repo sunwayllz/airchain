@@ -388,7 +388,7 @@ function delete_node() {
 
     rm -rf evm-station
     rm -rf .evmosd
-    rn -rf tracks
+    rm -rf tracks
     rm -rf .tracks
     rm -rf /usr/local/bin/eigenlayer
     rm -rf .eigenlayer
