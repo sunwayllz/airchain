@@ -131,6 +131,8 @@ EOF
         exit 1
     fi
 
+    cd $HOME
+
     echo "请保存airchains钱包地址和助记词，并领水后继续安装"
     exit 0
 }
@@ -198,6 +200,8 @@ EOF
     systemctl daemon-reload
     systemctl enable stationd
     systemctl restart stationd
+
+    cd $HOME
 }
 
 # 运行脚本
@@ -218,6 +222,7 @@ while true; do
             file_size=$(stat -c %s "$LOG_FILE")
             if [ "$file_size" -gt "$LOG_FILE_MAX" ]; then
               echo > "$LOG_FILE"
+              echo "清空 $LOG_FILE"
             fi
         fi
     done
@@ -226,6 +231,7 @@ done
 EOF
     chmod +x clear_log.sh
     nohup ./clear_log.sh &
+    sleep 1
     rm -rf clear_log.sh
 }
 
@@ -245,7 +251,7 @@ function restartSendAccount_python() {
         # 获取evm私钥
         cd $HOME/evm-station/
         evm_pkey=$(/bin/bash ./scripts/local-keys.sh)
-        cd -
+        cd $HOME
         # 替换脚本中的默认私钥
         sed -i "s/_FaucetAccountKey_/$evm_pkey/g" $py_file
     fi
@@ -299,7 +305,9 @@ function stationd_log() {
 # 查看evm私钥、air地址及助记词
 function private_key() {
     echo "【evm私钥】"
-    cd $HOME/evm-station/ && /bin/bash ./scripts/local-keys.sh && cd -
+    cd $HOME/evm-station/
+    /bin/bash ./scripts/local-keys.sh
+    cd $HOME
     echo "【air地址】"
     cat $HOME/.tracks/junction-accounts/keys/wallet.wallet.json | jq -r '.address'
     echo "【air助记词】"
