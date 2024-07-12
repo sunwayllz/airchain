@@ -3,6 +3,7 @@
 # 监控的错误信息
 ERROR_STRING_1="cosmos/cosmos-sdk@v0.50.3/baseapp/baseapp.go:991"
 ERROR_STRING_2="Failed to Init VRF"
+ERROR_STRING_3="Failed to Transact Verify pod"
 
 # 监控间隔时间
 INTERVALS_TIME=30
@@ -48,6 +49,18 @@ while true; do
   TAIL_LINES_100=$(tail -n 100 "$LOG_FILE")
   if echo "$TAIL_LINES_100" | grep -q "$ERROR_STRING_2"; then
     echo "检测到错误信息 '$ERROR_STRING_2'，重启 stationd 服务..."
+    systemctl stop stationd
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
+    $HOME/tracks/build/tracks rollback
+    systemctl restart stationd
+    for_count=0
+  fi
+
+  # 仅读取日志文件的最新3行来检测第三个错误字符串
+  TAIL_LINES_3=$(tail -n 3 "$LOG_FILE")
+  if echo "$TAIL_LINES_3" | grep -q "$ERROR_STRING_3"; then
+    echo "检测到错误信息 '$ERROR_STRING_3'，重启 stationd 服务..."
     systemctl stop stationd
     $HOME/tracks/build/tracks rollback
     $HOME/tracks/build/tracks rollback
