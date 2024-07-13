@@ -45,7 +45,7 @@ def saveEthAccount(filePath):
 def generateEthAccount():
     Account.enable_unaudited_hdwallet_features()
     account, mnemonic = Account.create_with_mnemonic()
-    return account.address, account.key.hex()[2:]
+    return account.address, account.key.hex()
 
 # 获取钱包余额
 def getEthAccountBalance(address):
