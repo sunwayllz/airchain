@@ -63,7 +63,7 @@ After=network-online.target
 [Service]
 User=root
 WorkingDirectory=/root/.evmosd
-ExecStart=$HOME/evm-station/build/station-evm start --metrics "" --log_level "info" --json-rpc.api eth,txpool,personal,net,debug,web3 --chain-id "$CHAIN_ID"
+ExecStart=$HOME/evm-station/build/station-evm start --metrics "" --log_level "info" --json-rpc.api eth,txpool,personal,net,debug,web3 --chain-id "${CHAIN_ID}_1234-1"
 Restart=on-failure
 RestartSec=5
 LimitNOFILE=65535
