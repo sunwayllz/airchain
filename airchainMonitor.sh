@@ -27,8 +27,6 @@ while true; do
     echo "定时重启并回退 stationd 服务..."
     systemctl stop stationd
     $HOME/tracks/build/tracks rollback
-    $HOME/tracks/build/tracks rollback
-    $HOME/tracks/build/tracks rollback
     systemctl restart stationd
     for_count=0
   fi
