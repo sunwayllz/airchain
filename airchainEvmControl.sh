@@ -375,6 +375,19 @@ function change_rpc() {
     fi
 }
 
+# 查询air钱包余额
+function check_balance() {
+    address=$(cat $HOME/.tracks/junction-accounts/keys/wallet.wallet.json | jq -r '.address')
+    # 获取积分
+    response=$(curl -s -X POST 'https://testnet.airchains.io/api/address/single-address/details' \
+      -H 'content-type: application/json' \
+      --data-raw "{\"walletAddress\":\"$address\"}")
+
+    # 提取 balance
+    balance=$(echo "$response" | jq -r '.data.balance')
+    echo "$address 钱包余额: $balance"
+}
+
 # 彻底删除节点
 function delete_node() {
     cd $HOME
@@ -431,6 +444,7 @@ function main_menu() {
         echo "8. 查看evm私钥、air地址及助记词"
         echo "9. 查看项目积分"
         echo "10. 更换RPC"
+        echo "11. 查询钱包余额"
         echo ""
         echo "========== 删除节点 =========="
         echo "100. 彻底删除节点"
@@ -448,6 +462,7 @@ function main_menu() {
             8) private_key ;;
             9) check_points ;;
             10) change_rpc ;;
+            11) check_balance ;;
             100) delete_node ;;
             *) echo "无效选项。" ;;
         esac
