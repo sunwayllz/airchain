@@ -8,7 +8,7 @@ ERROR_STRING_MORE=(
 ERROR_STRING_LESS=(
   "Failed to Init VRF"
   "Failed to Transact Verify pod"
-  "insufficient fees"
+  "error code: '13' msg: 'insufficient fees"
   )
 
 # 监控间隔时间
